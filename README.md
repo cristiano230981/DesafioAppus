@@ -59,7 +59,13 @@ O challenge será avaliado em diversos quesitos:
 git clone https://github.com/cristiano230981/DesafioAppus.git
 ```
 
-## Fazer o build da imagem com a aplicação
+## Build da api
+```bash
+mvn clean
+mvn install
+```
+
+## Build da imagem com a aplicação
 ```bash
 docker build -t desafioappus:0.1 .
 ```
