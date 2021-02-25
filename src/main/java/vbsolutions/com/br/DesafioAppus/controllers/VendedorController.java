@@ -17,7 +17,7 @@ import vbsolutions.com.br.DesafioAppus.DesafioAppusApplication;
 import vbsolutions.com.br.DesafioAppus.entities.VendedorEntity;
 import vbsolutions.com.br.DesafioAppus.exception.ResourceNotFoundException;
 import vbsolutions.com.br.DesafioAppus.repositories.VendedorRepository;
-
+import vbsolutions.com.br.DesafioAppus.services.VendedorService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -34,25 +34,28 @@ public class VendedorController {
 	@Autowired
 	private VendedorRepository repository;
 	
+	@Autowired
+	private VendedorService service;
+	
 	@ApiOperation(value = "Recupera todos os vendedores")
 	@GetMapping("/vendedor")
     public List<VendedorEntity> getAllVendedores() {
         logger.info("Listar todos os vendedores");
-        return repository.findAll();
+        return service.findAll(); //.repository.findAll();
     }
 	
 	@ApiOperation(value = "Recupera todos os vendedores por maior número de vendas")
-	@GetMapping("/vendedor")
+	@GetMapping("/vendedor/pedidos")
     public List<VendedorEntity> getAllVendedoresPorNumeroDeVendas() {
         logger.info("Listar todos os vendedores por qtde de vendas");
-        return repository.findByNumberOfSales();
-    }
+        return (List<VendedorEntity>) service.findAllWithOrderCount();
+    } 
 	
 	@ApiOperation(value = "Recupera todos os vendedores por valor de venda")
-	@GetMapping("/vendedor")
+	@GetMapping("/vendedor/valor")
     public List<VendedorEntity> getAllVendedoresPorValorDeVenda() {
         logger.info("Listar todos os vendedores por valor de vendas");
-        return repository.findByValueOfSales();
+        return (List<VendedorEntity>) service.findByOrderByTotalDesc();
     }
 
 	@ApiOperation(value = "Recupera um vendedor por id")

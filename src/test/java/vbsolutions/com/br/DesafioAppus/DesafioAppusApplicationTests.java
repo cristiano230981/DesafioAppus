@@ -14,10 +14,10 @@ class DesafioAppusApplicationTests {
 	@Autowired
 	private VendedorController controller;
 	
-//	@Test
-//	void contextLoads() {
-//		assertThat(controller).isNotNull();
-//	}
+	@Test
+	void contextLoads() {
+		assertThat(controller).isNotNull();
+	}
 	
 //	@Test
 //	public void greetingShouldReturnDefaultMessage() throws Exception {

@@ -1,10 +1,16 @@
 package vbsolutions.com.br.DesafioAppus.entities;
 
+import java.util.Collection;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -20,7 +26,17 @@ public class VendedorEntity {
 
     @Column(name = "matricula")
     private String matricula;
-
+    
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "vendedor_pedidos",
+            joinColumns = @JoinColumn(
+                    name = "vendedor_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "pedido_id", referencedColumnName = "id"))
+    private Collection<PedidoEntity> pedidos;
+    
+    
     public VendedorEntity() {
         super();
     }
@@ -47,6 +63,10 @@ public class VendedorEntity {
 
 	public void setMatricula(String matricula) {
 		this.matricula = matricula;
+	}
+	
+	public Collection<PedidoEntity> getPedidos() {
+		return pedidos;
 	}
     
     

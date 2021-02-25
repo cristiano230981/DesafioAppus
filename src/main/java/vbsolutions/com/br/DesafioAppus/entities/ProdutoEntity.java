@@ -1,10 +1,16 @@
 package vbsolutions.com.br.DesafioAppus.entities;
 
+import java.util.Collection;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -20,6 +26,16 @@ public class ProdutoEntity {
 
     @Column(name = "preco")
     private Double preco;
+    
+    
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "produto_pedidos",
+            joinColumns = @JoinColumn(
+                    name = "produto_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "pedido_id", referencedColumnName = "id"))
+    private Collection<PedidoEntity> pedidos;
 
     public ProdutoEntity() {
         super();
@@ -47,6 +63,10 @@ public class ProdutoEntity {
 
 	public void setPreco(Double preco) {
 		this.preco = preco;
+	}
+	
+	public Collection<PedidoEntity> getPedidos() {
+		return pedidos;
 	}
     
     
